@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>News Airdrop | Tiyarmybe</title>
+  <link rel="stylesheet" href="/styles/style.css" />
+</head>
+<body>
+  <header>
+    <img src="/assets/logo.png" alt="logo" width="80">
+    <h1>News Airdrop Potensial</h1>
+    <p class="footer">by Tiyarmybe</p>
+  </header>
+
+  <nav>
+    <button onclick="showSection('home')">🏠 Home</button>
+    <button onclick="showSection('airdrops')">🚀 Airdrop Potensial</button>
+    <button onclick="showSection('favorites')">⭐ Favorit Saya</button>
+    <button onclick="showSection('profile')">👤 Profil</button>
+  </nav>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="page">
+      <h2>Selamat datang, Hunter Web3!</h2>
+      <p>Temukan airdrop dari proyek besar seperti Galxe, LayerZero, Zealy, ZetaChain, dan lainnya!</p>
+    </section>
+
+    <!-- AIRDROP POTENSIAL -->
+    <section id="airdrops" class="page" style="display:none;">
+      <h2>🔥 Airdrop Potensial</h2>
+      <div id="airdrop-list">
+        <p>Memuat daftar airdrop terbaik...</p>
+      </div>
+    </section>
+
+    <!-- FAVORIT -->
+    <section id="favorites" class="page" style="display:none;">
+      <h2>⭐ Favorit Saya</h2>
+      <div id="favorite-list">
+        <p>Belum ada yang disimpan.</p>
+      </div>
+    </section>
+
+    <!-- PROFIL -->
+    <section id="profile" class="page" style="display:none;">
+      <h2>👤 Profil Kamu</h2>
+      <p>ID Unik: <span id="user-id">Belum Login</span></p>
+      <button onclick="logout()">🔓 Logout</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Tiyarmybe • Semua info Airdrop real-time</p>
+  </footer>
+
+  <script src="/scripts/frontend.js"></script>
+</body>
+</html>

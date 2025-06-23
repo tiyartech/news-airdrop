@@ -1,0 +1,132 @@
+/* Font & Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #0d1117;
+  color: #e6edf3;
+  line-height: 1.6;
+  padding-bottom: 80px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  background: #161b22;
+  padding: 30px 10px;
+  border-bottom: 2px solid #30363d;
+}
+
+.logo {
+  width: 80px;
+  margin-bottom: 10px;
+}
+
+header h1 {
+  font-size: 26px;
+  color: #58a6ff;
+}
+
+header p {
+  font-size: 14px;
+  color: #8b949e;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  justify-content: space-around;
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.nav button {
+  background: transparent;
+  border: none;
+  color: #e6edf3;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.nav button:hover {
+  color: #58a6ff;
+}
+
+/* Sections */
+main {
+  padding: 20px;
+}
+
+.section {
+  display: none;
+}
+
+.section:not(.hidden) {
+  display: block;
+}
+
+h2 {
+  color: #58a6ff;
+  margin-bottom: 10px;
+}
+
+.airdrop {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.airdrop h3 {
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.airdrop a {
+  display: inline-block;
+  margin-top: 8px;
+  color: #3fb950;
+  text-decoration: none;
+}
+
+.airdrop a:hover {
+  text-decoration: underline;
+}
+
+.airdrop button {
+  background: #238636;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  margin-left: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.airdrop button:hover {
+  background: #2ea043;
+}
+
+/* Footer */
+footer {
+  background: #0d1117;
+  color: #8b949e;
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+  border-top: 1px solid #30363d;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
