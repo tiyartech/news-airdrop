@@ -1,75 +1,40 @@
-// 👉 Navigasi antar menu
-function showSection(sectionId) {
-  document.querySelectorAll('.section').forEach(section => {
-    section.classList.add('hidden');
-  });
-  document.getElementById(sectionId).classList.remove('hidden');
+// 👉 Navigasi antar halaman
+function showSection(id) {
+  document.querySelectorAll('.page').forEach(s => s.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
 }
 
-// 👉 Generate ID user acak kalau belum ada
+// 👉 Generate user ID kalau belum ada
 function generateUserId() {
   const existing = localStorage.getItem('userId');
   if (existing) return existing;
-  const uid = 'TID-' + Math.random().toString(36).substring(2, 10).toUpperCase();
-  localStorage.setItem('userId', uid);
-  return uid;
+  const newId = 'TID-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+  localStorage.setItem('userId', newId);
+  return newId;
 }
 
-// 👉 Render Profil
+// 👉 Tampilkan info profil
 function renderProfile() {
-  const userId = generateUserId();
-  document.getElementById('user-id').innerText = userId;
-
+  document.getElementById('user-id').innerText = generateUserId();
   const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
   document.getElementById('fav-count').innerText = favs.length;
 }
 
-// 👉 Render daftar favorit
+// 👉 Tampilkan favorit
 function renderFavorites() {
   const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
   const list = document.getElementById('fav-list');
-  list.innerHTML = '';
-
-  if (favs.length === 0) {
-    list.innerHTML = '<p>Belum ada favorit.</p>';
-    return;
-  }
-
-  favs.forEach(drop => {
-    const div = document.createElement('div');
-    div.className = 'airdrop';
-    div.innerHTML = `
-      <h3>${drop.name}</h3>
-      <p><strong>Benefit:</strong> ${drop.benefit}</p>
-      <p><strong>Potensi:</strong> ${drop.potential}</p>
-      <a href="${drop.link}" target="_blank">🔗 Join Airdrop</a>
-    `;
-    list.appendChild(div);
-  });
+  list.innerHTML = favs.length
+    ? favs.map(d => `
+      <div class="airdrop">
+        <h3>${d.name}</h3>
+        <p><strong>Potensi:</strong> ${d.potential || '-'}</p>
+        <p><strong>Sumber:</strong> ${d.source || '-'}</p>
+        <a href="${d.link}" target="_blank">🔗 Kunjungi</a>
+      </div>
+    `).join('')
+    : '<p>Belum ada favorit.</p>';
 }
-
-// 👉 Ambil data dari backend & render
-fetch('http://localhost:3000/api/airdrops')
-  .then(res => res.json())
-  .then(data => {
-    const list = document.getElementById('airdrop-list');
-    list.innerHTML = '';
-    data.forEach(drop => {
-      const div = document.createElement('div');
-      div.className = 'airdrop';
-      div.innerHTML = `
-        <h3>${drop.name}</h3>
-        <p><strong>Benefit:</strong> ${drop.benefit}</p>
-        <p><strong>Potensi:</strong> ${drop.potential}</p>
-        <a href="${drop.link}" target="_blank">🔗 Join</a>
-        <button onclick='saveToFavorites(${JSON.stringify(drop)})'>❤️ Simpan</button>
-      `;
-      list.appendChild(div);
-    });
-  })
-  .catch(err => {
-    document.getElementById('airdrop-list').innerHTML = '<p>Gagal ambil data.</p>';
-  });
 
 // 👉 Simpan ke favorit
 function saveToFavorites(drop) {
@@ -85,6 +50,36 @@ function saveToFavorites(drop) {
   }
 }
 
-// 👉 Inisialisasi
+// 👉 Logout = clear local storage
+function logout() {
+  localStorage.clear();
+  location.reload();
+}
+
+// 👉 Ambil data airdrop real dari backend
+fetch('http://localhost:3000/api/airdrops')
+  .then(res => res.json())
+  .then(data => {
+    const list = document.getElementById('airdrop-list');
+    if (!data.length) {
+      list.innerHTML = '<p>Tidak ada data tersedia saat ini.</p>';
+      return;
+    }
+    list.innerHTML = data.map(drop => `
+      <div class="airdrop">
+        <h3>${drop.name}</h3>
+        <p><strong>Potensi:</strong> ${drop.potential || 'Tidak diketahui'}</p>
+        <p><strong>Sumber:</strong> ${drop.source || 'Unknown'}</p>
+        <a href="${drop.link}" target="_blank">🔗 Kunjungi</a>
+        <button onclick='saveToFavorites(${JSON.stringify(drop)})'>❤️ Simpan</button>
+      </div>
+    `).join('');
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById('airdrop-list').innerHTML = '<p>Gagal memuat data.</p>';
+  });
+
+// 👉 Inisialisasi saat halaman dimuat
 renderProfile();
 renderFavorites();
